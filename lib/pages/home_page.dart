@@ -31,10 +31,21 @@ class _HomePageState extends State<HomePage> {
               ),
               TextFormField(
                 controller: numerobuscar,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: "Numero que desea buscar",
-                  prefixIcon: Icon(Icons.phone)
+                  prefixIcon: Icon(Icons.phone),
+
+                  suffixIcon: PopupMenuButton<String>(
+                    icon: Icon(Icons.adb_outlined),
+                    onSelected: (value) {
+                      print("Seleccionaste: $value");
+                      // Puedes manejar la opción seleccionada
+                    },
+                    itemBuilder: (BuildContext context) => [
+                      //items
+                    ],
+                  ),
                 ),
                 keyboardType: TextInputType.phone,
               ),
@@ -57,8 +68,8 @@ class _HomePageState extends State<HomePage> {
 
   void buscarnumero(String numerobuscar) async {
     var numeroFuture = await num.getNumber(numerobuscar);
-    print(numeroFuture.localFormat);
-    Navigator.pushReplacement(
+    //var paises = await num.fetchCountries();
+    Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => InfoPage(mapnumber: numeroFuture)),
     );
