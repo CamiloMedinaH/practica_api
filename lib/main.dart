@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:practica_api/models/api_numverify.dart';
 import 'package:practica_api/pages/splash_page.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-void main() {
+void main() async{
+   WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  Hive.registerAdapter(ApiNumverifyAdapter());
+  await Hive.openBox<ApiNumverify>('misDatos');
   runApp(const MyApp());
 }
 

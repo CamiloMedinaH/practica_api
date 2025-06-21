@@ -1,4 +1,4 @@
-import 'dart:convert';
+import 'package:hive/hive.dart';
 /// valid : true
 /// number : "573116889225"
 /// local_format : "0X, 04XX3116889225"
@@ -10,99 +10,108 @@ import 'dart:convert';
 /// carrier : "Comunicacion Celular SA (COMCEL)"
 /// line_type : "mobile"
 
-ApiNumverify apiNumverifyFromJson(String str) => ApiNumverify.fromJson(json.decode(str));
-String apiNumverifyToJson(ApiNumverify data) => json.encode(data.toJson());
-class ApiNumverify {
-  ApiNumverify({
-      bool? valid, 
-      String? number, 
-      String? localFormat, 
-      String? internationalFormat, 
-      String? countryPrefix, 
-      String? countryCode, 
-      String? countryName, 
-      String? location, 
-      String? carrier, 
-      String? lineType,}){
-    _valid = valid;
-    _number = number;
-    _localFormat = localFormat;
-    _internationalFormat = internationalFormat;
-    _countryPrefix = countryPrefix;
-    _countryCode = countryCode;
-    _countryName = countryName;
-    _location = location;
-    _carrier = carrier;
-    _lineType = lineType;
-}
+part 'api_numverify.g.dart'; // Este archivo lo genera build_runner
 
-  ApiNumverify.fromJson(dynamic json) {
-    _valid = json['valid'];
-    _number = json['number'];
-    _localFormat = json['local_format'];
-    _internationalFormat = json['international_format'];
-    _countryPrefix = json['country_prefix'];
-    _countryCode = json['country_code'];
-    _countryName = json['country_name'];
-    _location = json['location'];
-    _carrier = json['carrier'];
-    _lineType = json['line_type'];
+@HiveType(typeId: 1)
+class ApiNumverify extends HiveObject {
+  @HiveField(0)
+  bool? valid;
+
+  @HiveField(1)
+  String? number;
+
+  @HiveField(2)
+  String? localFormat;
+
+  @HiveField(3)
+  String? internationalFormat;
+
+  @HiveField(4)
+  String? countryPrefix;
+
+  @HiveField(5)
+  String? countryCode;
+
+  @HiveField(6)
+  String? countryName;
+
+  @HiveField(7)
+  String? location;
+
+  @HiveField(8)
+  String? carrier;
+
+  @HiveField(9)
+  String? lineType;
+
+  ApiNumverify({
+    this.valid,
+    this.number,
+    this.localFormat,
+    this.internationalFormat,
+    this.countryPrefix,
+    this.countryCode,
+    this.countryName,
+    this.location,
+    this.carrier,
+    this.lineType,
+  });
+
+  factory ApiNumverify.fromJson(Map<String, dynamic> json) {
+    return ApiNumverify(
+      valid: json['valid'],
+      number: json['number'],
+      localFormat: json['local_format'],
+      internationalFormat: json['international_format'],
+      countryPrefix: json['country_prefix'],
+      countryCode: json['country_code'],
+      countryName: json['country_name'],
+      location: json['location'],
+      carrier: json['carrier'],
+      lineType: json['line_type'],
+    );
   }
-  bool? _valid;
-  String? _number;
-  String? _localFormat;
-  String? _internationalFormat;
-  String? _countryPrefix;
-  String? _countryCode;
-  String? _countryName;
-  String? _location;
-  String? _carrier;
-  String? _lineType;
-ApiNumverify copyWith({  bool? valid,
-  String? number,
-  String? localFormat,
-  String? internationalFormat,
-  String? countryPrefix,
-  String? countryCode,
-  String? countryName,
-  String? location,
-  String? carrier,
-  String? lineType,
-}) => ApiNumverify(  valid: valid ?? _valid,
-  number: number ?? _number,
-  localFormat: localFormat ?? _localFormat,
-  internationalFormat: internationalFormat ?? _internationalFormat,
-  countryPrefix: countryPrefix ?? _countryPrefix,
-  countryCode: countryCode ?? _countryCode,
-  countryName: countryName ?? _countryName,
-  location: location ?? _location,
-  carrier: carrier ?? _carrier,
-  lineType: lineType ?? _lineType,
-);
-  bool? get valid => _valid;
-  String? get number => _number;
-  String? get localFormat => _localFormat;
-  String? get internationalFormat => _internationalFormat;
-  String? get countryPrefix => _countryPrefix;
-  String? get countryCode => _countryCode;
-  String? get countryName => _countryName;
-  String? get location => _location;
-  String? get carrier => _carrier;
-  String? get lineType => _lineType;
 
   Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['valid'] = _valid;
-    map['number'] = _number;
-    map['localformat'] = _localFormat;
-    map['internationalformat'] = _internationalFormat;
-    map['countryprefix'] = _countryPrefix;
-    map['countrycode'] = _countryCode;
-    map['countryname'] = _countryName;
-    map['location'] = _location;
-    map['carrier'] = _carrier;
-    map['linetype'] = _lineType;
-    return map;
+    return {
+      'valid': valid,
+      'number': number,
+      'local_format': localFormat,
+      'international_format': internationalFormat,
+      'country_prefix': countryPrefix,
+      'country_code': countryCode,
+      'country_name': countryName,
+      'location': location,
+      'carrier': carrier,
+      'line_type': lineType,
+    };
+  }
+}
+
+//Country class to represent country information
+
+class Country {
+  final String countryName;
+  final String diallingCode;
+
+  Country({
+    required this.countryName,
+    required this.diallingCode,
+  });
+
+  factory Country.fromJson(Map<String, dynamic> json) {
+    return Country(
+      countryName: json['country_name'],
+      diallingCode: json['dialling_code'],
+    );
   }
 
+  Map<String, dynamic> toJson() {
+    return {
+      'country_name': countryName,
+      'dialling_code': diallingCode,
+    };
+  }
 }
+
+
