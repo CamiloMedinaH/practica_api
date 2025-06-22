@@ -42,6 +42,8 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Image(image: AssetImage("assets/image/telefono.png"), height: 150, width: 150,),
+              SizedBox(height: 20,),
               Text("Seleccione el pais e ingrese el número que desea buscar"),
               SizedBox(
                 height: 16,

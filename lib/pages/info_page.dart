@@ -14,14 +14,9 @@ class InfoPage extends StatefulWidget {
 
 class _InfoPageState extends State<InfoPage> {
   final mapnumber;
-
   _InfoPageState(this.mapnumber);
-
   var box = Hive.box<ApiNumverify>('misDatos');
-
-
   void saveFavorite() async{
-
       if(box.keys.contains(mapnumber.number)){
         await box.delete(mapnumber.number);
       }
@@ -40,16 +35,25 @@ class _InfoPageState extends State<InfoPage> {
             )
           );
       }
-
     setState(() {
       print(box.toMap());
     });
-    
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Informacion de numero"),
+        actions: [
+          IconButton(
+            onPressed: saveFavorite,
+            icon: Icon(Icons.favorite,
+              color: box.keys.contains(mapnumber.number)? const Color.fromARGB(255, 195, 146, 204) : Colors.grey,
+            ),
+          )
+        ],
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Center(
@@ -57,24 +61,54 @@ class _InfoPageState extends State<InfoPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("Numero: ${mapnumber.number.substring(2)}"),
-                Text("Formato local: ${mapnumber.localFormat}"),
-                Text("Formato internacional: ${mapnumber.internationalFormat}"),
-                Text("Prefijo del pais: ${mapnumber.countryPrefix}"),
-                Text("Codigo del pais: ${mapnumber.countryCode}"),
-                Text("Nombre del pais: ${mapnumber.countryName}"),
-                Text("localizacion: ${mapnumber.location}"),
-                Text("Operador: ${mapnumber.carrier}"),
-                Text("Tipo de linea: ${mapnumber.lineType}"),
-                SizedBox(
-                  height: 30,
+                Text(" ${mapnumber.number.substring(2)}",
+                  style: TextStyle(
+                  fontSize: 35,
+                    fontWeight: FontWeight.bold,
+                ),),
+                SizedBox(height: 10,),
+                Text("Formato local: ${mapnumber.localFormat}",
+                  style: TextStyle(
+                  fontSize: 25,
+                ),),
+                SizedBox(height: 10,),
+                Text("Formato internacional: ${mapnumber.internationalFormat}",
+                  style: TextStyle(
+                  fontSize: 25,
                 ),
-                TextButton(
-                  style: TextButton.styleFrom(
-                    backgroundColor:  box.keys.contains(mapnumber.number)? const Color.fromARGB(255, 195, 146, 204) : Colors.grey,
-                  ),
-                  onPressed: saveFavorite, 
-                  child: Text("Favorito"))
+                  textAlign: TextAlign.center,),
+                SizedBox(height: 10,),
+                Text("Prefijo del pais: ${mapnumber.countryPrefix}",
+                  style: TextStyle(
+                  fontSize: 25,
+                ),),
+                SizedBox(height: 10,),
+                Text("Codigo del pais: ${mapnumber.countryCode}",
+                  style: TextStyle(
+                  fontSize: 25,
+                ),),
+                SizedBox(height: 10,),
+                Text("Nombre del pais: ${mapnumber.countryName}",
+                  style: TextStyle(
+                  fontSize: 25,
+                ),
+                textAlign: TextAlign.center,),
+                SizedBox(height: 10,),
+                Text("localizacion: ${mapnumber.location}",
+                  style: TextStyle(
+                  fontSize: 25,
+                ),),
+                SizedBox(height: 10,),
+                Text("Operador: ${mapnumber.carrier}",
+                  style: TextStyle(
+                  fontSize: 25,
+                ),
+                  textAlign: TextAlign.center,),
+                SizedBox(height: 10,),
+                Text("Tipo de linea: ${mapnumber.lineType}",
+                  style: TextStyle(
+                  fontSize: 25,
+                ),),
               ],
             ),
           ),

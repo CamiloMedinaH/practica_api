@@ -11,7 +11,6 @@ class Favorites extends StatefulWidget {
 
 class _FavoritesState extends State<Favorites>  {
 
-  late Box box;
   List<ApiNumverify> favoritos = [];
 
   @override
@@ -21,17 +20,20 @@ class _FavoritesState extends State<Favorites>  {
     cargarFavoritos();
   }
 
+  final box = Hive.box<ApiNumverify>('misdatos');
+
   void cargarFavoritos() async {
     if (!Hive.isBoxOpen('misdatos')) {
       await Hive.openBox<ApiNumverify>('misdatos');
     }
 
-    final box = Hive.box<ApiNumverify>('misdatos');
-
     setState(() {
       favoritos = box.values.cast<ApiNumverify>().toList();
     });
   }
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,7 +63,7 @@ class _FavoritesState extends State<Favorites>  {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Número: ${item.number}", style: const TextStyle(fontWeight: FontWeight.bold)),
+                Text("Número: ${item.number!.substring(2)}", style: const TextStyle(fontWeight: FontWeight.bold)),
                 Text("Formato local: ${item.localFormat}"),
                 Text("Formato internacional: ${item.internationalFormat}"),
                 Text("Prefijo: ${item.countryPrefix}"),
@@ -70,6 +72,19 @@ class _FavoritesState extends State<Favorites>  {
                 Text("Ubicación: ${item.location}"),
                 Text("Operador: ${item.carrier}"),
                 Text("Tipo de línea: ${item.lineType}"),
+                Row(
+                  children: [
+                    SizedBox(
+                      width: 270,
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        _EliminarFavorito(item.number);
+                      },
+                      icon: Icon(Icons.delete),
+                    ),
+                  ],
+                )
               ],
             ),
           );
@@ -77,4 +92,14 @@ class _FavoritesState extends State<Favorites>  {
       ),
     );
   }
+
+  void _EliminarFavorito(String? number) async {
+    await box.delete(number);
+    setState(() {
+      favoritos = box.values.cast<ApiNumverify>().toList();
+    });
+  }
+
 }
+
+

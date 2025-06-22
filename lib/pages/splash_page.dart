@@ -21,9 +21,9 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Center(
-        child: Text("Espere"),
+        child: Image(image: AssetImage("assets/image/telefono.png"), height: 150, width: 150,),
       )
     );
   }
