@@ -7,7 +7,7 @@ class Number{
 
   Future<ApiNumverify> getNumber(String numerobuscar,String code) async {
 
-    final apiResponse = await http.get(Uri.parse("http://apilayer.net/api/validate?&access_key=9d6a4a9e835a2ae0390dc09e118d8c2e&number=${code+numerobuscar}"));
+    final apiResponse = await http.get(Uri.parse("http://apilayer.net/api/validate?&access_key=c78e4518a74e625e0a08e631021437ef&number=${code+numerobuscar}"));
     print(apiResponse.body);
     if (apiResponse.statusCode == 200) {
       return ApiNumverify.fromJson(jsonDecode(apiResponse.body));
@@ -17,12 +17,15 @@ class Number{
   }
 
   Map<String, Country> parseCountries(Map<String, dynamic> json) {
-    return json.map((key, value) => MapEntry(key, Country.fromJson(value)));
+    print("Hola");
+    final result = json.map((key, value) => MapEntry(key, Country.fromJson(value)));
+    print("Hola2");
+    return result;
   }
 
 
   Future<Map<String, Country>> fetchCountries() async {
-    final response = await http.get(Uri.parse('http://apilayer.net/api/countries?access_key=9d6a4a9e835a2ae0390dc09e118d8c2e'));
+    final response = await http.get(Uri.parse('http://apilayer.net/api/countries?access_key=c78e4518a74e625e0a08e631021437ef'));
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body);

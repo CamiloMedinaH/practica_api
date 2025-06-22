@@ -4,6 +4,7 @@ import 'package:practica_api/models/api_numverify.dart';
 import 'package:practica_api/pages/info_page.dart';
 import 'package:practica_api/repository/Number.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:practica_api/pages/favorites.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key, required this.countriesData});
@@ -41,7 +42,7 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("El numero ingresado debe contenerla distincion de su pais sin el signo +"),
+              Text("Seleccione el pais e ingrese el número que desea buscar"),
               SizedBox(
                 height: 16,
               ),
@@ -104,7 +105,7 @@ class _HomePageState extends State<HomePage> {
                 onPressed: () {
                   verLocalInfo();
                 },
-                child: const Text("info guardada"),
+                child: const Text("Favoritos"),
               )
             ],
           ),
@@ -125,6 +126,10 @@ class _HomePageState extends State<HomePage> {
 
   void verLocalInfo(){
     print(box.toMap());
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => Favorites()),
+    );
   }
 
 }
